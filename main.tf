@@ -11,7 +11,7 @@ variable "domain_name" {
 variable "subdomain_name" {
   description = "The subdomain name to use for the website (e.g., www)"
   type        = string
-  default     = "test2"
+  default     = "cdn"
 }
 
 data "aws_route53_zone" "selected" {
@@ -155,7 +155,7 @@ resource "aws_cloudfront_distribution" "website_distribution" {
 
   price_class = "PriceClass_100"
 
-  web_acl_id = var.enable_waf ? aws_wafv2_web_acl.waf.arn : null
+  web_acl_id = var.enable_waf ? aws_wafv2_web_acl.waf[0].arn : null
   depends_on = [aws_wafv2_web_acl.waf]
 }
 
